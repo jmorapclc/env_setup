@@ -1,0 +1,74 @@
+pgAdmin Runtime Environment
+--------------------------------------------------------
+Python Path: "/usr/pgadmin4/venv/bin/python3"
+Runtime Config File: "/home/jmora/.config/pgadmin/runtime_config.json"
+pgAdmin Config File: "/usr/pgadmin4/web/config.py"
+Webapp Path: "/usr/pgadmin4/web/pgAdmin4.py"
+pgAdmin Command: "/usr/pgadmin4/venv/bin/python3 -s /usr/pgadmin4/web/pgAdmin4.py"
+Environment: 
+  - GJS_DEBUG_TOPICS: JS ERROR;JS LOG
+  - LC_TIME: es_CL.UTF-8
+  - USER: jmora
+  - XDG_SESSION_TYPE: wayland
+  - SHLVL: 0
+  - HOME: /home/jmora
+  - OLDPWD: /home/jmora
+  - DESKTOP_SESSION: ubuntu-wayland
+  - GIO_LAUNCHED_DESKTOP_FILE: /usr/share/applications/pgadmin4.desktop
+  - GTK_MODULES: gail:atk-bridge
+  - GNOME_SHELL_SESSION_MODE: ubuntu
+  - LC_MONETARY: es_CL.UTF-8
+  - MANAGERPID: 3060
+  - DBUS_SESSION_BUS_ADDRESS: unix:path=/run/user/1000/bus
+  - GIO_LAUNCHED_DESKTOP_FILE_PID: 688615
+  - WAYLAND_DISPLAY: wayland-0
+  - LOGNAME: jmora
+  - _: /usr/bin/gnome-session
+  - JOURNAL_STREAM: 8:71810
+  - XDG_SESSION_CLASS: user
+  - USERNAME: jmora
+  - GNOME_DESKTOP_SESSION_ID: this-is-deprecated
+  - PATH: /usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+  - SESSION_MANAGER: local/pida:@/tmp/.ICE-unix/3188,unix/pida:/tmp/.ICE-unix/3188
+  - INVOCATION_ID: 623e10b134d44e6db17627920bd4151a
+  - LC_ADDRESS: es_CL.UTF-8
+  - XDG_RUNTIME_DIR: /run/user/1000
+  - XDG_MENU_PREFIX: gnome-
+  - GNOME_SETUP_DISPLAY: :1
+  - DISPLAY: :0
+  - LANG: en_US.UTF-8
+  - LC_TELEPHONE: es_CL.UTF-8
+  - XDG_CURRENT_DESKTOP: ubuntu:GNOME
+  - XDG_SESSION_DESKTOP: ubuntu-wayland
+  - XMODIFIERS: @im=ibus
+  - XAUTHORITY: /run/user/1000/.mutter-Xwaylandauth.GDSZD2
+  - SSH_AGENT_LAUNCHER: gnome-keyring
+  - SSH_AUTH_SOCK: /run/user/1000/keyring/ssh
+  - LC_NAME: es_CL.UTF-8
+  - SHELL: /usr/bin/zsh
+  - QT_ACCESSIBILITY: 1
+  - GDMSESSION: ubuntu-wayland
+  - LC_MEASUREMENT: es_CL.UTF-8
+  - LC_IDENTIFICATION: es_CL.UTF-8
+  - GJS_DEBUG_OUTPUT: stderr
+  - QT_IM_MODULE: ibus
+  - PWD: /home/jmora
+  - XDG_DATA_DIRS: /usr/local/share/:/usr/share/:/var/lib/snapd/desktop
+  - LC_NUMERIC: es_CL.UTF-8
+  - LC_PAPER: es_CL.UTF-8
+  - GDK_BACKEND: x11
+  - NO_AT_BRIDGE: 1
+  - PGADMIN_INT_PORT: 5050
+  - PGADMIN_INT_KEY: d0a4e7d6-f9e8-4ac7-8a79-6dd0c1ed1457
+  - PGADMIN_SERVER_MODE: OFF
+--------------------------------------------------------
+
+Total spawn time to start the pgAdmin4 server: 0.007 Sec
+2023-11-23 13:58:40,301: WARNING	werkzeug:	Werkzeug appears to be used in a production deployment. Consider switching to a production web server instead.
+
+Address already in use
+Port 5050 is in use by another program. Either identify and stop that program, or start the server with a different port.
+
+ * Serving Flask app 'pgadmin'
+ * Debug mode: off
+

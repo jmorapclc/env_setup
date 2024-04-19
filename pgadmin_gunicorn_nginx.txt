@@ -1,0 +1,66 @@
+1. Download wheel (last version)
+
+https://www.pgadmin.org/download/pgadmin-4-python-wheel/
+
+2. Create /opt/pgadmin4
+
+3. Create / activate virtual environment
+
+cd /opt/pgadmin4
+python3 -m venv venv
+. venv/bin/activate
+
+4. Copy .wheel to /opt/pgadmin4 and install
+pip install pgadmin4-4.11-py2.py3-none-any.whl
+
+5. Create data directory
+cd /opt/pgadmin4
+mkdir data
+
+6. Create config_local.py inside /opt/pgadmin4/venv/lib/python3.6/site-packages/pgadmin4
+
+import os
+DATA_DIR = '/opt/pgadmin4/data'
+LOG_FILE = os.path.join(DATA_DIR, 'pgadmin4.log')
+SQLITE_PATH = os.path.join(DATA_DIR, 'pgadmin4.db')
+SESSION_DB_PATH = os.path.join(DATA_DIR, 'sessions') 
+STORAGE_DIR = os.path.join(DATA_DIR, 'storage')
+
+7. Run setup. It will ask for e-mail and password.
+
+8. Install gunicorn
+
+cd /opt/pgadmin4
+. venv/bin/activate
+pip install gunicorn
+deactivate
+
+9. Create / run pgadmin4.service for systemd
+
+cd /etc/systemd/system
+vim pgadmin4.service
+
+[Unit]
+Description=pgAdmin4 service
+After=network.target
+
+[Service]
+User=root
+Group=root
+Environment="PATH=/opt/pgadmin4/venv/bin"
+ExecStart=/opt/pgadmin4/venv/bin/gunicorn --bind unix:/tmp/pgadmin4.sock --workers=1 --threads=25 --chdir /opt/pgadmin4/venv/lib/python3.6/site-packages/pgadmin4 pgAdmin4:app
+
+[Install]
+WantedBy=multi-user.target
+
+After that, start service:
+
+service pgadmin4 start
+
+10. NGINX. Add to configuration
+
+location /pgadmin4 {
+    include proxy_params;
+    proxy_pass http://unix:/tmp/pgadmin4.sock;
+    proxy_set_header X-Script-Name /pgadmin4;           
+}

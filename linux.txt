@@ -1,0 +1,207 @@
+
+Automatic Updates
+$ sudo apt update && sudo apt upgrade -y
+$ sudo apt install unattended-upgrades
+$ sudo vim /etc/apt/apt.conf.d/20auto-upgrades
+	APT::Periodic::Update-Package-Lists "1";
+	APT::Periodic::Unattended-Upgrade "1";
+	APT::Periodic::AutocleanInterval "7";
+$ sudo vim /etc/apt/apt.conf.d/50unattended-upgrades
+	Unattended-Upgrade::Automatic-Reboot "true"; # change to true
+
+RSYNC
+=====
+
+rsync -r -ah --progress --stats /source /destination
+
+settings
+========
+
+sudo apt install gnome-control-center
+
+ssh
+===
+
+sshfs
+
+SSH key
+-------
+
+$ ssh-keygen -t ed25519 
+$ cat ~/.ssh/id_ed25519.pub
+
+	remote
+	------
+	mkdir ~/.ssh/
+	chmod 700 -R ~/.ssh/
+	sudo vim ~/.ssh/authorized_keys		# paste your public SSH key
+
+	$ sudo vim /etc/ssh/sshd_config
+		PermitRootLogin no # change to no
+		...
+		PasswordAuthentication no # change to no
+
+files
+=====
+
+cp -a /source/. /dest/
+he -a option is an improved recursive option, that preserve all file attributes, and also preserve symlinks.
+The . at end of the source path is a specific cp syntax that allow to copy all files and folders, included hidden ones.
+
+To remove a folder with all its contents (including all interior folders):
+
+rm -rf /path/to/directory
+To remove all the contents of the folder (including all interior folders) but not the folder itself:
+
+rm -rf /path/to/directory/*
+or, if you want to make sure that hidden files/directories are also removed:
+
+rm -rf /path/to/directory/{*,.*}
+To remove all the "files" from inside a folder(not removing interior folders):
+
+rm -f /path/to/directory/{*,.*}
+Warning: if you have spaces in your path, make sure to always use quotes.
+
+rm -rf /path/to the/directory/*
+is equivalent to 2 separate rm -rf calls:
+
+rm -rf /path/to
+rm -rf the/directory/*
+To avoid this issue, you can use 'single-quotes'(prevents all expansions, even of shell variables) or "double-quotes"(allows expansion of shell variables, but prevents other expansions):
+
+rm -rf "/path/to the/directory/"*
+Where:
+
+rm - stands for remove
+-f - stands for force which is helpful when you don't want to be asked/prompted if you want to remove an archive, for example.
+-r - stands for recursive which means that you want to go recursively down every folder and remove everything.
+
+packages
+========
+
+sudo dpkg -i /path/to/your/package.deb
+sudo apt install -f # to fix dependencies fi needed
+
+
+
+compress
+========
+
+$ sudo apt install unrar
+$ unrar x file.rar /path/to/save
+$ unrar e file.rar # without directory structure
+$ unrar l file.rar # list content of the file
+$ unrar t file.rar # test integrity
+
+CRON
+====
+
+apt install cron
+systemctl enable --now cron
+
+/etc/cron.hourly
+/etc/cron.daily
+/etc/cron.weekly
+/etc/cron.monthly
+
+crontab -e
+
+* minute - from 0 to 59
+* hour - from 0 to 23
+* day of month - from 1 to 31
+* month - from 1 to 12 OR jan, feb, mar, apr, etc.
+* day of week - from 0 to 6 (Sunday = 0 or 7) OR sun, mon, tue, wed, thu, fri, sat
+* command
+
+minute hour day_of_month month day_of_week command_to_run
+
+Hyphen (-) allows you to specify a range of values. For example, execution on weekdays:
+10 20 * * 1-5
+
+Comma (,) allows you to specify multiple values. For example, the launch at 10 and 20 o'clock can be written as follows:
+10 10,20 * * *
+
+Slash (/) allows you to specify a value step. For example, run every 10 minutes:
+*/10 * * * *
+
+In addition, there are special expressions for simple creation of tasks: @reboot, @yearly or @annually, @monthly, @weekly, @daily, @hourly, @midnight. When applied, the frequency will correspond to their name. For example:
+@midnight /var/script
+
+To see all configured cron jobs, use the command:
+crontab -l
+
+Managing cron jobs of other users
+You can view cron jobs created by other users if you have administrator rights (sudo) or after logging in with the root account:
+
+crontab -u username -l
+
+And even edit them:
+crontab -u username -e
+
+To prohibit this action for certain users, add their logins to the /etc/cron.deny file. Other users will have the right.
+To prevent cron jobs from being created for all but some users, add those users to the /etc/cron.allow file.
+
+system crontab:
+/etc/crontab
+
+User-owned Crontab Files
+/var/spool/cron/crontabs
+
+scripts:
+/path/script
+
+	#!/usr/bin/bash
+
+	chmod u+x /etc/cron.daily/script_file
+
+
+/etc/contrib
+	* * * * * /script
+	@weekly systemctl start docker
+
+/var/spool/cron/crontabs/jmora
+	0 23 * * * ~/cron/rsync_files
+
+crontab -l 		# it shows /var/spool/cron/crontabs/jmora
+
+~/cron/rsync_files
+	#!/bin/bash
+
+	rsync -av ~/path/ ~/destination/path
+
+	onedrive --synchronize
+
+
+/etc/cron.weekly/update
+	#!/bin/bash
+	apt update -y && apt upgrade -y
+
+
+$ sudo vim /etc/rsyslog.d/50-default.conf
+	un comment #cron.*
+$ sudo service rsyslog restart
+
+
+SYSTEMCTL
+=========
+
+systemctl list-units
+ststemctl --type=service
+
+systemctl list-units --type=service --state=active
+
+systemctl --type=service --state=active
+
+systemctl --type=service --state=running
+
+netstat -ltunp | grep nginx
+
+
+SESSION MANAGERS
+================
+
+screen -r 4450
+ctl a d
+
+
+sudo unlink python3

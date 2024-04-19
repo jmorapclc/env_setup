@@ -1,0 +1,14 @@
+
+$ sudo pacman -Syu --noconfirm
+
+$ sudo timedatectl status
+$ sudo timedatectl set-ntp true
+$ sudo timedatectl set-timezone US/Alaska
+
+$ sudo pacman-key --refresh-keys
+
+$ sudo pacman-key --init
+$ sudo pacman-key --populate
+
+# Alternatively, one can try to re-install the entire key-ring
+$ pacman -Sy archlinux-keyring && pacman -Su

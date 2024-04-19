@@ -1,0 +1,108 @@
+pandas functions that accepts regular expression:
+
+Methods	Description
+count()		Count occurrences of pattern in each string of the Series/Index
+replace()	Replace the search string or pattern with the given value
+contains()	Test if pattern or regex is contained within a string of a Series or Index. Calls re.search() and returns a boolean
+extract()	Extract capture groups in the regex pat as columns in a DataFrame and returns the captured groups
+findall()	Find all occurrences of pattern or regular expression in the Series/Index. Equivalent to applying re.findall() on all elements
+match()		Determine if each string matches a regular expression. Calls re.match() and returns a boolean
+split()		Equivalent to str.split() and Accepts String or regular expression to split on
+rsplit()	Equivalent to str.rsplit() and Splits the string in the Series/Index from the end
+
+re.findall(pattern, text, flags=re.I)
+re.search
+
+pattern = r'\w'
+re.findall(pattern, text, flags=re.I) # returns all the matched strings in a list.
+re.search(pattern, text) # returns the first occurrence of the match as a match object.
+re.search(pattern, text, flags=re.I).span()
+re.search(pattern, text, flags=re.I).group()
+re.search(pattern, text, flags=re.I).start()
+re.search(pattern, text, flags=re.I).end()
+re.match(pattern, text) # checks the beginning of the text for the pattern.
+re.finditer(pattern, text) # returns an iterator of match objects.
+re.sub(pattern, repl, text) # replaces matched substring(s) with the ‘repl’ string.
+re.split(pattern, text) # splits text at the position of the match(es), into a list.
+
+.	matches and returns any character in the string, except a new line
+\w 	any alphanumeric character
+\W 	anything that is not \w
+\d 	any digit
+\D 	any non-digit
+\s 	a white space
+\S 	negates \s
+[] 	matches any of the characters inside the square brackets
+[^]	right after the opening square bracket negates the character set
+* 	matches if the previous pattern appears zero or many times
+? 	matches if the previous pattern appears zero or one time
+{n} defines exact number of times to match the previous character or pattern
+{n,m}	defines minimum (n) and maximum (m) times to match the previous pattern
+{m, }	matches the previous element at least ‘min’ times
+
+^ 	matches only the start of a text
+$ 	matches the end of the string
+\b 	matches the boundary right before or after a word
+()	group
+		pattern = r'(\w+)@(\w+)\.(\w+)\b'
+		m.group(0) # 'sue@gmail.com'
+		m.group(1) # 'sue'
+		m.group(2) # 'gmail'
+		m.group(3) # 'com'
+		r'(\w)\1' # looks for substrings where a character has been repeated
+			text = '08 Dec'
+			pattern = '(?P<day>\d{2})\s(?P<month>\w{3})'
+			m = re.search(pattern, text)
+			m.group('day')
+		?: # non-capturing groups
+			text = 'date 23 total 42% date 17 total 35%'
+			pattern = r'(\d+)(?:%)'
+			re.findall(pattern, text)
+			###
+			['42', '35']
+|	returns all matches of either one pattern or another
+
+.   Single character match except newline
+"." Anything in quotations marks literally
+A*  Zero or more occurrences of A
+A+  One or more occurrences of A
+A?  Zero or one occurrence of A
+A/B Match A only if followed by B
+()  series of regexps grouped together
+[]  Match any character in brackets
+[^] Do not match any character in brackets
+[-] Define range of characters to match
+^   Match beginning of new line
+$   Match end of a line
+{}  Cardinality of pattern match set
+\   Escapes meta-characters
+|   Disjunctive matches, or operation match
+
+
+
+pattern_fecha_n = r'(?<=: )(\d{2}[\--/]\d{2}[\--/]\d{4})'
+pattern_rut = r'(\d{1,2}\.\d{3}\.\d{3}-[0-9|K|k])'
+pattern_edad = r'(?<=Edad:\s)(\d{2})(?= )'
+pattern_age = r'(?<=Age:\s)(\d{2})(?= )'
+pattern_porcent = r'(\d+%)'
+pattern_porcent_solo = r'(\d+%$)'
+pattern_porcent_cump = r'(?<=[\(])(\d+%)(?=\))'
+pattern_porcent_4_may = r'(>=)(\s\d(\s\w+)+\s\W)(\d+%)'
+pattern_porcent_4_men = r'(<)(\s\d(\s\w+)+\s\W)(\d+%)'
+pattern_dias = r'((\d{2}\/\d{2})(?= ))'
+pattern_horas_uso = r'(?<=o\s)(\d{1,3}\sh\w+\s\d+\sm)'
+pattern_horas_prom_total = re.compile(r'(?<=s\) )(\d{1,3}\sh\w+\s\d+\sm)')
+pattern_horas_prom_dias = r'(?<=promedio\s\(días usado\) )(\d{1,3}\sh\w+\s\d+\sm)'
+pattern_horas_medio = r'(?<=[^(pro)]medio\s\(días usado\) )(\d{1,3}\sh\w+\s\d+\sm)'
+pattern_fecha_ini = r'(\d{2}/\d{2}/\d{4})(?= -)'
+pattern_fecha_fin = r'(?<=- )(\d{2}/\d{2}/\d{4})'
+pattern_dispositivo = r'(AirSense\s\d{2}\s\w+)'
+pattern_mode = re.compile(r'(Mod\w\s\w+)')
+pattern_mode_extract = re.compile(r'(?<=Mod\w\s)(\w+)')
+pattern_usage_hours = r'(?<=Usage\shours\s)(\d{1,3}\sh\w+\s\d+\sm)'
+pattern_average_usage_total = r'(?<=Average\susage\s\(total days\) )(\d{1,3}\sh\w+\s\d+\sm)'
+pattern_average_usage_days = r'(?<=Average\susage\s\(days used\) )(\d{1,3}\sh\w+\s\d+\sm)'
+pattern_median_usage_days = r'(?<=Median\susage\s\(days used\) )(\d{1,3}\sh\w+\s\d+\sm)'
+pattern_time_extract = r'(\d{1,3}\sh\w+\s\d+\sm)'
+pattern_presion_min = r'(?<=Presión\smín\.\s)(\d{1,2}\sc\w+)'
+pattern_presion_max = r'(?<=Presión\smáx\.\s)(\d{1,2}\sc\w+)'

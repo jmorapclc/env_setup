@@ -1,0 +1,65 @@
+PostgreSQL
+
+replicator postgrespida
+postgres pidasql # database
+
+postgres sqldl_19 # linux user
+
+
+sudo -u postgres psql -c "\l"
+
+psql -h localhost -U postgres -W
+
+
+pgAdmin master dsreg
+
+
+CREATE ROLE jmora WITH SUPERUSER LOGIN PASSWORD 'cardiosql_19';
+
+ALTER ROLE jmora SUPERUSER LOGIN;
+
+jmora@pida2018-02:~$ sudo -u jmora createdb clc
+
+jmora@pida2018-02:~$ psql clc
+
+pgAdmin4 dlAdmin_
+
+
+
+
+$ sudo -u postgres psql
+postgres=# \password postgres
+
+
+28/03/23
+postgres user # ucdcsql
+
+postgres=# show config_file;
+
+
+
+gunicorn --bind unix:/tmp/pgadmin4.sock --workers=1 --threads=25 --chdir /usr/pgadmin4/ pgAdmin4:app
+
+
+
+pgrep psql
+685937
+
+ps auxf | grep psql
+
+
+/etc/postgresql/16/main/postgresql.conf
+
+
+/usr/lib/postgresql/16/bin/psql -h localhost -U postgres -W
+
+
+
+
+pgadmin4
+========
+
+
+netstat -tulpn | grep :5050
+
+/usr/pgadmin/venv/bin/python3 -s /usr/pgadmin4/web/pgAdmin4.py

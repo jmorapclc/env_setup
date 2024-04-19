@@ -1,0 +1,20 @@
+IPv4 Method Automatic (DHCP)
+DNS 128.1.21.70, 128.1.21.71 Automatic OFF
+Routes Address 128.1.21.71 Netmask 255.255.255.128 Gateway 172.27.3.1 Metric (vacio)
+
+Identity
+MTU automatic
+
+Details
+check Connect automatically
+check Make available to others
+
+Security
+802.1x Security ON
+Authentication Protected EAP (PEAP)
+CA certificate (None)
+	check No CA certificate is required
+PEAP version Automatic
+Inner authentication MSCHAPv2
+Username jmorap
+Password 

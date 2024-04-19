@@ -1,0 +1,95 @@
+PostgreSQL
+
+replicator postgrespida
+postgres pidasql # database
+
+
+postgres sqldl_19 # linux user
+
+
+sudo -u postgres psql -c "\l"
+
+psql -h localhost -U postgres -W
+
+
+
+
+
+CREATE ROLE jmora WITH SUPERUSER LOGIN PASSWORD 'cardiosql_19';
+
+ALTER ROLE jmora SUPERUSER LOGIN;
+
+jmora@pida2018-02:~$ sudo -u jmora createdb clc
+
+jmora@pida2018-02:~$ psql clc
+
+pgAdmin4 dlAdmin_
+
+
+
+ALTER USER user_name WITH PASSWORD 'new_password';
+
+
+        
+~/docker/pgdev/docker-compose.yaml
+
+version: "3.7"
+
+services:
+        db:
+                image: postgres:14
+                restart: always
+                environment:
+                        POSTGRES_DB: postgres
+                        POSTGRES_USER: admin
+                        POSTGRES_PASSWORD: pidaslq
+                        PGDATA: /var/lib/postgresql/data
+                        volumes:
+                                - db-data:/var/lib/postgresql/data
+                        ports:
+                                - "5432:5432"
+                                   
+        pgadmin:
+                image: dpage/pgadmin4:6.1
+                restart: always
+                environment:
+                        PGADMIN_DEFAULT_EMAIL: jmorap@clinicalascondes.cl
+                        PGADMIN_DEFAULT_PASSWORD: dlAdmin_
+                        PGADMIN_LISTEN_PORT: 80
+                ports:
+                        - "8080:80"
+                volumes:
+                        - pgadmin-data:/var/lib/pgadmin
+                links:
+                        - "db:pgsql-server"
+
+volumes:
+        db-data:
+        pgadmin-data:
+
+
+
+CREATE TABLE IF NOT EXISTS public.preregistros
+(
+    id SERIAL PRIMARY KEY,
+    "ENCNTR_LOC_HIST_ID" numeric,
+    "ENCNTR_ID" numeric,
+    "BEG_EFFECTIVE_DT_TM" date,
+    "END_EFFECTIVE_DT_TM" date,
+    "LOCATION_CD" numeric,
+    "LOCATION_DESC" character(100) COLLATE pg_catalog."default"
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.preregistros
+    OWNER to jmora;
+
+
+--command " "\\copy public.preregistros (\"ENCNTR_LOC_HIST_ID\", \"ENCNTR_ID\", \"BEG_EFFECTIVE_DT_TM\", \"END_EFFECTIVE_DT_TM\", \"LOCATION_CD\", \"LOCATION_DESC\") FROM '/home/jmora/Documents/rehosp/preregistros/preregistros.dsv' DELIMITER E'\\t' CSV HEADER ENCODING 'UTF8' QUOTE '''' NULL '\"\"' ESCAPE '''';""
+
+\COPY problems ("PROBLEM_ID", "PERSON_ID", "SOURCE_VOCABULARY_CD", "SOURCE_VOCABULARY_DESC", "CODIGO_PROBLEMA", "PROBLEMA", "ANNOTATED_DISPLAY", "DATA_STATUS_PRSNL_ID", "DATA_STATUS_PRSNL_NAME", "FECHA_REGISTRO", "FECHA_MODIFICACION", "CLASSIFICATION_CD", "CLASSIFICATION_DESC", "LIFE_CYCLE_STATUS_CD", "LIFE_CYCLE_STATUS_DESC", "ONSET_DT_TM", "RANKING_CD", "RANKING_DESC") FROM '/home/jmora/Documents/rehosp/tablas/problems/problems.tsv' WITH DELIMITER E'\t' CSV HEADER ENCODING 'UTF8' QUOTE '"' ESCAPE '''';"";
+
+ROM '/home/jmora/Documents/rehosp/tablas/problems/problems.tsv' DELIMITER E'\\t' CSV HEADER ENCODING 'UTF8' QUOTE '\"' ESCAPE '''';""
+
+\COPY problems ("PROBLEM_ID", "PERSON_ID", "SOURCE_VOCABULARY_CD", "SOURCE_VOCABULARY_DESC", "CODIGO_PROBLEMA", "PROBLEMA", "ANNOTATED_DISPLAY", "DATA_STATUS_PRSNL_ID", "DATA_STATUS_PRSNL_NAME", "FECHA_REGISTRO", "FECHA_MODIFICACION", "CLASSIFICATION_CD", "CLASSIFICATION_DESC", "LIFE_CYCLE_STATUS_CD", "LIFE_CYCLE_STATUS_DESC", "ONSET_DT_TM", "RANKING_CD", "RANKING_DESC") FROM '/var/lib/postgresql/data/problems.tsv' WITH DELIMITER E'\t' CSV HEADER ENCODING 'UTF8' QUOTE '"' ESCAPE '''';"";

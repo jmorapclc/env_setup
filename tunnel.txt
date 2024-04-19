@@ -1,0 +1,15 @@
+
+ssh -L 8888:localhost:8888 user@server
+
+
+Putty
+=====
+Tunnels
+Source port 8888
+localhost:8888
+
+
+Terminal
+========
+
+jupyter lab --no-browser

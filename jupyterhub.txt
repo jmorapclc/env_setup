@@ -1,0 +1,64 @@
+Fuente: https://github.com/jupyterhub/jupyterhub-the-hard-way/blob/HEAD/docs/installation-guide-hard.md
+
+sudo python3 -m venv /opt/jupyterhub/
+
+sudo /opt/jupyterhub/bin/python3 -m pip install wheel
+sudo /opt/jupyterhub/bin/python3 -m pip install jupyterhub jupyterlab
+sudo /opt/jupyterhub/bin/python3 -m pip install ipywidgets
+
+sudo apt install nodejs npm
+
+sudo npm install -g configurable-http-proxy
+
+sudo mkdir -p /opt/jupyterhub/etc/jupyterhub/
+cd /opt/jupyterhub/etc/jupyterhub/
+
+sudo /opt/jupyterhub/bin/jupyterhub --generate-config
+
+sudo vim /opt/jupyterhub/etc/jupyterhub/jupyterhub_config.py
+
+c.Spawner.default_url = '/lab'
+
+sudo mkdir -p /opt/jupyterhub/etc/systemd
+
+sudo vim /opt/jupyterhub/etc/systemd/jupyterhub.service
+
+[Unit]
+Description=JupyterHub
+After=syslog.target network.target
+
+[Service]
+User=root
+Environment="PATH=/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/jupyterhub/bin"
+ExecStart=/opt/jupyterhub/bin/jupyterhub -f /opt/jupyterhub/etc/jupyterhub/jupyterhub_config.py
+
+[Install]
+WantedBy=multi-user.target
+
+sudo ln -s /opt/jupyterhub/etc/systemd/jupyterhub.service /etc/systemd/system/jupyterhub.service
+
+sudo systemctl daemon-reload
+
+sudo systemctl enable jupyterhub.service
+sudo systemctl start jupyterhub.service
+
+# create a default kernel
+
+mkdir /opt/jupyterhub/envs/
+sudo python3 -m venv /opt/jupyterhub/envs/python
+source /opt/jupyterhub/envs/python/bin/activate
+(python) $ pip install ipykernel
+(python) $ sudo /opt/jupyterhub/envs/python/bin/python -m ipykernel install --prefix=/opt/jupyterhub/ --name 'python' --display-name "Python (default)"
+(python) $ deactivate
+
+# create a customized kernel for loged user (in /home/user/.local/share/jupyter/kernels/<kernel>)
+
+mkvirtualenv <name>
+(name) $ pip install ipykernel
+(name) $ python -m ipykernel install --user --name 'name' --display-name "some_name"
+
+# create a kernel for all users (in /usr/local/share/jupyter/kernels/<kernel>)
+
+mkvirtualenv <name>
+(name) $ pip install ipykernel
+(name) $ sudo python3 -m ipykernel install --name 'name' --display-name "some_name"
