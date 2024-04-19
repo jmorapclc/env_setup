@@ -149,3 +149,12 @@ I don’t personally use these yet, but I’ve heard other people do!
 Additional resources
 Advanced Vim
 Practical Vim is a fantastic resource on many of the useful hidden features of vim.
+
+plugins
+=======
+
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+:PluginInstall
+:PluginUpdate
+:PluginClean
