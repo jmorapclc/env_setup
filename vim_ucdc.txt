@@ -1,0 +1,4 @@
+:set paste 
+# Ctrl + Shift + v 	(in set mode)
+# Shift + Insert 	(in edit mode)
+

@@ -1,0 +1,75 @@
+
+$ sudo pacman -Syu
+
+$ sudo pacman -Sy sshfs
+
+$ sudo yay -Sy autofs
+
+
+mount
+=====
+
+$ sshfs user@IP:/path /local/path
+
+Firewall
+========
+
+ufw
+
+$ sudo pacman -Sy ufw
+sudo systemctl start ufw
+sudo systemctl enable ufw
+
+sudo ufw default allow outgoing
+sudo ufw default deny incoming
+
+sudo ufw allow ssh or sudo ufw allow 22
+
+sudo ufw enable
+
+sudo ufw allow 80/tcp
+sudo ufw allow http/tcp
+sudo ufw allow 1725/udp
+sudo ufw allow 1725/udp
+sudo ufw allow from 123.45.67.89/24
+sudo ufw allow from 123.45.67.89 to any port 22 proto tcp
+
+sudo ufw delete allow 22
+
+sudo ufw status
+
+sudo nvim /etc/systemd/system/ufwAuto.service
+
+[Unit]
+Description=Check Is FireWall on/off and Up it is down!
+
+[Service]
+Type=simple
+ExecStart=/home/saeed/ufw.sh
+
+[Install]
+WantedBy=multi-user.target
+
+ufw.sh:
+
+#!/bin/bash
+temp=$(sudo ufw status | grep Status | cut -d" " -f2)
+if [ "$temp" == "inactive" ]; then
+exec sudo ufw enable
+fi
+
+sudo nvim /etc/systemd/system/ufwAuto.timer
+
+[Unit]
+Description=Run ufwAuto.service every 1 minutes
+
+[Timer]
+OnCalendar=*:0/1
+Unit=ufwAuto.service
+
+[Install]
+WantedBy=multi-user.target
+
+sudo systemctl enable ufwAuto.service
+sudo systemctl start ufwAuto.service
+

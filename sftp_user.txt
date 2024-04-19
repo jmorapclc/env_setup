@@ -1,0 +1,32 @@
+sudo adduser --shell /bin/false sftpuser
+sudo mkdir -p /var/sftp/files
+sudo chown sftpuser:sftpuser /var/sftp/files
+sudo chown root:root /var/sftp 
+	# all parent directories must be root access
+sudo chmod 755 /var/sftp
+eii datoseii
+
+sudo vim /etc/ssh/sshd_config
+
+Match User sftpuser
+	ForceCommand internal-sftp
+	PasswordAuthentication yes
+	ChrootDirectory /var/sftp
+	PermitTunnel no
+	AllowAgentForwarding no
+	AllowTcpForwarding no
+	X11Forwarding no
+
+sudo systemctl restart ssh
+
+sftp sftpuser@sftp.tecadmin.net
+sftpuser@sftp.tecadmin.net's password:
+sftp>
+
+ssh sftpuser@sftp.tecadmin.net 
+
+sftpuser@sftp.tecadmin.net's password:
+This service allows sftp connections only.
+Connection to sftp.tecadmin.net closed.
+
+

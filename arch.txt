@@ -1,0 +1,35 @@
+printer
+=======
+
+sudo pacman -S cups
+sudo systemctl enable --now cups
+sudo pacman -S hplip # HP Driver
+sudo hp-setup -i
+
+git clone https://github.com/OpenPrinting/system-config-printer
+
+source ./install-sh
+
+http://localhost:631/
+
+socket://172.27.5.30
+
+sudo gpasswd -a "$USER" sys
+system-config-printer
+
+lpinfo --include-schemes dnssd -v
+
+packages GUI
+============
+
+Discovery
+---------
+Install PackageKit-Qt5: This is essential for Discover to manage packages from Arch Linux repositories. You can install it using the command: 
+
+sudo pacman -S packagekit-qt5
+
+Enable Flatpak and other backends: If you want Discover to handle Flatpaks or other types of packages, you need to install the respective backends. For Flatpak, use sudo 
+
+sudo pacman -S flatpak
+
+sudo hp-setup -i
