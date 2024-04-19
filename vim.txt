@@ -158,3 +158,26 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 :PluginInstall
 :PluginUpdate
 :PluginClean
+
+vim python support
+==================
+
+:echo has('python3')
+
+If this returns 1, then Python 3 is supported. You can also check the Python version specifically linked with Vim:
+
+:python3 print(sys.version)
+
+Install YouCompleteMe
+=====================
+
+cd ~/.vim/bundle/
+git clone https://github.com/ycm-core/YouCompleteMe.git
+cd YouCompleteMe
+git submodule update --init --recursive
+
+You might need CMake installed for this step:
+python3 install.py --all
+
+This command compiles YCM with all language support. If you only need specific language support, you can omit --all and use other options as described in the YCM documentation.
+
